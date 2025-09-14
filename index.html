@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wordle</title>
+  <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="words.js"></script>
+</head>
+<body><body style="background: #f6f8fa; font-family: 'Inter', 'Roboto', Arial, sans-serif; color: #222;">
+  <nav class="navbar navbar-expand-sm">
+    <div class="container-fluid">
+        <h1 style="font-weight: 800; font-size: 2.4rem; margin: 0; letter-spacing: 0.04em; color: #222;">Wordle</h1>
+        <div style="display: flex; gap: 16px;">
+          <button id="btnHelp" title="Instructions" class="key wide" style="background: #f6f8fa; color: #222; border-radius: 10px; box-shadow: 0 2px 8px rgba(60,60,60,0.07); border: 1px solid #e3e7ed; font-size: 1.3rem; padding: 8px 18px;"><i class="bi bi-question-circle"></i></button>
+          <button id="btnStats" title="Statistics" class="key wide" style="background: #f6f8fa; color: #222; border-radius: 10px; box-shadow: 0 2px 8px rgba(60,60,60,0.07); border: 1px solid #e3e7ed; font-size: 1.3rem; padding: 8px 18px;"><i class="bi bi-bar-chart"></i></button>
+          <button id="btnNewGame" title="New Game" class="key wide" style="background: #6dd47e; color: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(60,60,60,0.07); border: none; font-size: 1.3rem; padding: 8px 18px;"><i class="bi bi-arrow-clockwise"></i></button>
+        </div>
+    </div>
+  </nav>
+  <main class="container">
+    <main class="container" style="margin-top: 0;">
+    <div id="board" class="board">
+      <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+      <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+      <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+      <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+      <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+      <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+    </div>
+    <div id="keyboard" class="keyboard">
+  <div class="ivarow">
+        <button class="key" data-key="Q">Q</button>
+        <button class="key" data-key="W">W</button>
+        <button class="key" data-key="E">E</button>
+        <button class="key" data-key="R">R</button>
+        <button class="key" data-key="T">T</button>
+        <button class="key" data-key="Y">Y</button>
+        <button class="key" data-key="U">U</button>
+        <button class="key" data-key="I">I</button>
+        <button class="key" data-key="O">O</button>
+        <button class="key" data-key="P">P</button>
+      </div>
+      <div class="ivarow">
+        <button class="key" data-key="A">A</button>
+        <button class="key" data-key="S">S</button>
+        <button class="key" data-key="D">D</button>
+        <button class="key" data-key="F">F</button>
+        <button class="key" data-key="G">G</button>
+        <button class="key" data-key="H">H</button>
+        <button class="key" data-key="J">J</button>
+        <button class="key" data-key="K">K</button>
+        <button class="key" data-key="L">L</button>
+        <button class="key wide" data-key="enter">ENTER</button>
+      </div>
+      <div class="ivarow">
+        <button class="key" data-key="Z">Z</button>
+        <button class="key" data-key="X">X</button>
+        <button class="key" data-key="C">C</button>
+        <button class="key" data-key="V">V</button>
+        <button class="key" data-key="B">B</button>
+        <button class="key" data-key="N">N</button>
+        <button class="key" data-key="M">M</button>
+        <button class="key wide" data-key="delete">DELETE</button>
+      </div>
+      </div>
+    </div>
+  </main>
+  <div class="modal" id="myModalInfo">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none; background: #f6f8fa; border-radius: 16px 16px 0 0;">
+              <h2 class="modal-title" id="helpLabel" style="font-weight: 800; font-size: 1.7rem; color: #222;">How to Play</h2>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" style="font-size: 1.15rem; color: #444; line-height: 1.7;">
+              <p style="margin-bottom: 18px;">Guess the <span style="font-weight:600; color:#6dd47e">secret 5 letter word</span> in up to <span style="font-weight:600; color:#6dd47e">6 attempts</span>. Each guess must be a valid English word.</p>
+              <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px;">
+              </div>
+              <p style="margin-bottom: 10px;">After each guess, the tiles change color to show how close you are:</p>
+              <ul style="padding-left: 1.2em; margin-bottom: 0;">
+                <li><span style="background:#6dd47e; color:#fff; border-radius:4px; padding:2px 8px; font-weight:600;">Green</span> is correct letter in the correct position</li>
+                <li><span style="background:#ffe066; color:#222; border-radius:4px; padding:2px 8px; font-weight:600;">Yellow</span> is correct letter in the wrong position</li>
+                <li><span style="background:#d1d5db; color:#888; border-radius:4px; padding:2px 8px; font-weight:600;">Gray</span> is letter not in the word</li>
+              </ul>
+            </div>
+        </div>
+      </div>
+    </div>
+  <div class="modal" id="myModalStats">
+      <div class="modal-dialog" style="max-width: 900px; min-width: 600px;">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none; background: #f6f8fa; border-radius: 16px 16px 0 0;">
+              <h2 class="modal-title" id="statsLabel" style="font-weight: 800; font-size: 1.7rem; color: #222;">Statistics</h2>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" style="font-size: 1.15rem; color: #444; line-height: 1.7;">
+              <div id="statsGrid" class="stats-grid" style="margin-top: 24px; display: flex; flex-direction: row; gap: 18px; justify-content: center; align-items: flex-end; height: 180px;">
+                <div class="statrow" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 8px; height: 100%;">
+                  <div id="stat1" class="statbar vertical-bar"></div>
+                  <span class="statlabel" style="font-weight:600; color:#6dd47e; font-size:1.1rem; margin-top: 6px;">1</span>
+                </div>
+                <div class="statrow" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 8px; height: 100%;">
+                  <div id="stat2" class="statbar vertical-bar"></div>
+                  <span class="statlabel" style="font-weight:600; color:#6dd47e; font-size:1.1rem; margin-top: 6px;">2</span>
+                </div>
+                <div class="statrow" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 8px; height: 100%;">
+                  <div id="stat3" class="statbar vertical-bar"></div>
+                  <span class="statlabel" style="font-weight:600; color:#6dd47e; font-size:1.1rem; margin-top: 6px;">3</span>
+                </div>
+                <div class="statrow" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 8px; height: 100%;">
+                  <div id="stat4" class="statbar vertical-bar"></div>
+                  <span class="statlabel" style="font-weight:600; color:#6dd47e; font-size:1.1rem; margin-top: 6px;">4</span>
+                </div>
+                <div class="statrow" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 8px; height: 100%;">
+                  <div id="stat5" class="statbar vertical-bar"></div>
+                  <span class="statlabel" style="font-weight:600; color:#6dd47e; font-size:1.1rem; margin-top: 6px;">5</span>
+                </div>
+                <div class="statrow" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 8px; height: 100%;">
+                  <div id="stat6" class="statbar vertical-bar"></div>
+                  <span class="statlabel" style="font-weight:600; color:#6dd47e; font-size:1.1rem; margin-top: 6px;">6</span>
+                </div>
+                <div class="statrow" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 8px; height: 100%;">
+                  <div id="stat0" class="statbar vertical-bar" style="background:#d1d5db;"></div>
+                  <span class="statlabel" style="font-weight:600; color:#d1d5db; font-size:1.1rem; margin-top: 6px;">0</span>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  <div id="alertsContainer" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; position: fixed; top: 20px; left: 0; width: 100%;">
+  <div id="alertNotInDict" class="alert alert-secondary text-center" style="display:none; min-width: 300px;">Word is not in the dictionary!</div>
+  <div id="alertWin" class="alert alert-success text-center" style="display:none; min-width: 300px;">You guessed the word!</div>
+  <div id="alertLose" class="alert alert-secondary text-center" style="display:none; min-width: 300px;">Game over. The secret word is: </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
