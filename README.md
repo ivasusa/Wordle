@@ -15,12 +15,6 @@ Guess the secret 5-letter word in up to 6 attempts. Each guess must be a valid E
 - **Yellow**: correct letter in the wrong position
 - **Gray**: letter not in the word
 
-## Getting Started
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/tvojusername/wordix.git
-   ```
-2. Open the folder in your browser or with a local server 
 
 ## Credits
 Inspired by [Wordle](https://www.nytimes.com/games/wordle/index.html).
