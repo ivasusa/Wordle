@@ -1,4 +1,4 @@
-# Wordix
+# Wordle Clone
 
 A modern, minimalist word guessing game inspired by Wordle.
 
